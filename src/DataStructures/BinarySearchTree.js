@@ -50,48 +50,58 @@ export class BinarySearchTree {
   }
 
   /**
-   * Private (recursive) function used by removeBid()
+   * Private recursive helper function used by #removeNode()
+   * Search and get Node with minimum value of the subtree
+   * @param {Node} node Current node
+   * @returns Node
+   */
+  #findMinNode(node) {
+    return node.left === null ? node : this.#findMinNode(node.left)
+  }
+
+  /**
+   * Private recursive function used by removeBid()
    * @param {Node} node Current Node
    * @param {string} bidId bidId of the Node to be removed
-   * @returns
+   * @returns an object containing a node and status
+   * status changes to true when a Node is removed, remains false when no Node is removed
    */
-  #removeNode(node, bidId) {
+  #removeNode(node, bidId, status) {
     // If this node is null then return null
     if (node === null) {
-      return null
+      return { node: null, status: false }
     }
 
     // If bidId is smaller than node's, recurse down the left subtree
     // Else if bidId is greater than node's recurse down the right subtree
     // Else Node is found
     if (bidId < node.bid.bidId) {
-      node.left = this.#removeNode(node.left, bidId)
+      const result = this.#removeNode(node.left, bidId)
+      node.left = result.node
+      return { node: node, status: result.status }
     } else if (bidId > node.bid.bidId) {
-      node.right = this.#removeNode(node.right, bidId)
+      const result = this.#removeNode(node.right, bidId)
+      node.right = result.node
+      return { node: node, status: result.status }
     } else {
-      // Node has no children (leaf)
       if (node.left === null && node.right === null) {
+        // Node has no children (leaf)
         node = null
-      }
-      // One child to the left
-      else if (node.left != null && node.right === null) {
+      } else if (node.left != null && node.right === null) {
+        // One child to the left
         node = node.left
-      }
-      // One child to the right
-      else if (node.left === null && node.right != null) {
+      } else if (node.left === null && node.right != null) {
+        // One child to the right
         node = node.right
+      } else {
+        // Two children
+        const minRightSubTree = this.#findMinNode(node.right)
+        node.bid = minRightSubTree.bid
+        const result = this.#removeNode(node.right, minRightSubTree.bid.bidId)
+        node.right = result.node
       }
-      // Two children
-      else {
-        let temp = node.right
-        while (temp.left != null) {
-          temp = temp.left
-        }
-        node.bid = temp.bid
-        node.right = this.#removeNode(node.right, temp.bid.bidId)
-      }
+      return { node: node, status: true }
     }
-    return node
   }
 
   constructor() {
@@ -111,16 +121,13 @@ export class BinarySearchTree {
 
   /**
    * Search and remove Bid with matching bidId
-   * Call removeNode() to recurse starting at the root
+   * Call #removeNode() to recurse starting at the root
    * @param {string} bidId bidId of the Bid to be removed
-   * @returns If removeNode returns null, the bidId was not found, return false, else, it was found, return true
+   * @returns status property of the object returned by #removeNode()
    */
   removeBid(bidId) {
-    const node = this.#removeNode(this.#root, bidId)
-    if (node === null) {
-      return false
-    }
-    return true
+    const result = this.#removeNode(this.#root, bidId, false)
+    return result.status
   }
 
   /**
