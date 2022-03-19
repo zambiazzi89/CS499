@@ -259,6 +259,9 @@ export const OperationMenu = ({
         case 'quick':
           result = array.current.quickSort()
           break
+        case 'merge':
+          result = array.current.mergeSort()
+          break
         default:
           alert('Incorrect Sorting Type')
       }
@@ -367,7 +370,12 @@ export const OperationMenu = ({
           >
             Quick Sort
           </div>
-          <div className={`inactive-operation-button`}>Merge Sort</div>
+          <div
+            className={`${loadedData ? 'active' : 'inactive'}-operation-button`}
+            onClick={() => handleArraySort('merge')}
+          >
+            Merge Sort
+          </div>
         </>
       )}
       {dataStructure === 'Linked List' && (

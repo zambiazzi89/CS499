@@ -5,11 +5,8 @@ export class CustomArray {
   }
 
   /**
-   * !!!!!!!!!!!!!!!!!!!!!!!!!!!
-   * !-- Not implemented yet --!
-   * !!!!!!!!!!!!!!!!!!!!!!!!!!!
    * Private helper function used by mergeSort()
-   * While leftArr and rightArr have elements, compare the first element and push the smallest to "merged"
+   * While leftArr and rightArr have elements, compare the first elements' bidId values and push the smallest to "merged"
    * When one of the arrays has no elements, use the spread operator (...) to:
    *     return an array with the elements of merged first, then the elements of leftArr, and then the elements of rightArr
    * @param {Array} leftArr left array
@@ -19,27 +16,26 @@ export class CustomArray {
   #sortAndMerge = (leftArr, rightArr) => {
     const merged = []
     while (leftArr.length && rightArr.length) {
-      merged.push(leftArr[0] < rightArr[0] ? leftArr.shift() : rightArr.shift())
+      merged.push(
+        leftArr[0].bidId < rightArr[0].bidId
+          ? leftArr.shift()
+          : rightArr.shift()
+      )
     }
     return [...merged, ...leftArr, ...rightArr]
   }
 
   /**
-   * !!!!!!!!!!!!!!!!!!!!!!!!!!!
-   * !-- Not implemented yet --!
-   * !-- Errors to be fixed  --!
-   * !!!!!!!!!!!!!!!!!!!!!!!!!!!
    * Recursive function
    * Split array in two, call itself recursively for the left and right arrays
-   * @returns array when length is smaller than 2, else return the merged array by calling #sortAndMerge helper function
+   * @param {Array} arr Array to be sorted, defaults to this.array
+   * @returns a merged array returned by the helper function this.#sortAndMerge
    */
-  mergeSort = () => {
-    if (this.array.length < 2) return this.array
-    const midIndex = Math.floor(this.array.length / 2)
-    const leftArr = this.mergeSort(this.array.slice(0, midIndex))
-    const rightArr = this.mergeSort(
-      this.array.slice(midIndex, this.array.length)
-    )
+  mergeSort = (arr = this.array) => {
+    if (arr.length < 2) return arr
+    const midIndex = Math.floor(arr.length / 2)
+    const leftArr = this.mergeSort(arr.slice(0, midIndex))
+    const rightArr = this.mergeSort(arr.slice(midIndex, arr.length))
     return this.#sortAndMerge(leftArr, rightArr)
   }
 
