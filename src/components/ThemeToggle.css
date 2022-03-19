@@ -1,0 +1,22 @@
+.theme-toggle {
+  height: 1.2em;
+  width: 2.4em;
+  border-radius: 1em;
+  background-color: rgb(125, 125, 125);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 0.2em;
+}
+
+.toggle-notch {
+  height: 0.8em;
+  width: 0.8em;
+  background-color: var(--bg-color);
+  border-radius: 50%;
+  transition: all 1s ease;
+}
+
+.toggle-notch.dark-theme {
+  transform: translateX(1.2em);
+}

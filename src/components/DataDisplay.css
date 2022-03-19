@@ -1,0 +1,13 @@
+.data-container {
+  background-color: var(--card-color);
+  flex: 1;
+  overflow-y: scroll;
+  transition: background-color 1.5s ease;
+}
+
+.no-dataset-message {
+  padding: 1em;
+}
+.dataset-row {
+  padding: 1em;
+}

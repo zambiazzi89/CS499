@@ -1,0 +1,37 @@
+.operation-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 15em;
+  box-shadow: 5em 5em black;
+}
+.data-structure-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--accent-color);
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.active-operation-button,
+.inactive-operation-button {
+  width: 100%;
+  padding: 1em;
+  margin: 0.1em;
+  color: var(--button-font-color);
+  text-align: center;
+}
+.active-operation-button {
+  background-color: var(--accent-color);
+}
+.active-operation-button:hover {
+  cursor: pointer;
+  background-color: var(--accent-color-light);
+}
+.inactive-operation-button {
+  background-color: grey;
+}
+.inactive-operation-button:hover {
+  cursor: default;
+}

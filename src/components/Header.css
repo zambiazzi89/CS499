@@ -1,0 +1,112 @@
+@media only screen and (max-width: 450px) {
+  .header-menu-button {
+    display: block;
+  }
+  .App-header ul {
+    position: fixed;
+    z-index: 1;
+    top: 4.9em;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--card-color);
+    height: 0em;
+  }
+  .App-header ul {
+    transition: all ease 1s;
+  }
+  .App-header ul.dropdown-closed {
+    height: 0em;
+    border-bottom: 1px solid transparent;
+  }
+  .App-header ul.dropdown-closed li {
+    opacity: 0;
+    transition: all 0.25s ease;
+  }
+  .App-header ul.dropdown-open {
+    height: 12em;
+    border-bottom: 1px solid var(--accent-color);
+  }
+  .App-header ul.dropdown-open li {
+    opacity: 1;
+    transition: all 0.5s ease 0.5s;
+  }
+}
+@media only screen and (min-width: 450px) {
+  .header-menu-button {
+    display: none;
+  }
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+#logo {
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+}
+#logo path {
+  fill: var(--accent-color);
+}
+.App-header,
+.header-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+.header-background {
+  height: 5em;
+  z-index: 9;
+  background-image: linear-gradient(
+    to right,
+    var(--accent-color),
+    rgba(0, 0, 0, 0),
+    var(--accent-color)
+  );
+}
+.App-header {
+  z-index: 10;
+  height: 4.9em;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--font-color);
+  font-weight: 800;
+}
+.App-header nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+}
+
+.App-header li {
+  margin-left: 1em;
+  list-style: none;
+}
+.App-header a {
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+.nav-button:hover {
+  cursor: pointer;
+}
+
+a.active-nav-button {
+  color: var(--accent-color);
+}
+.active-nav-button:hover {
+  cursor: default;
+}
+.App-header .icons {
+  width: 1.5em;
+  height: 1.5em;
+}

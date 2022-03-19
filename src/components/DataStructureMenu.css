@@ -1,0 +1,24 @@
+.data-structure-menu {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  padding-top: 5em;
+}
+
+.data-structure-button {
+  margin: 1em;
+  padding: 1em;
+  background-color: var(--accent-color);
+  color: var(--button-font-color);
+  text-align: center;
+}
+.data-structure-button:hover {
+  cursor: pointer;
+  background-color: var(--accent-color-light);
+}
+
+.ds-menu-prompt {
+  padding-bottom: 1em;
+  border-bottom: 2px solid var(--accent-color-lighter);
+  margin-bottom: 1em;
+}
