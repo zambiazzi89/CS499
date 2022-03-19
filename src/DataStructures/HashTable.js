@@ -1,5 +1,13 @@
+// Default size of the Hash Table
 const DEFAULT_SIZE = 179
 
+/*
+ * Node class is used to build the Hash Table
+ * The bid field holds a Bid class
+ * The next field act as "pointer" to another Node
+ * When arguments are not provided, they default to null
+ * The key defaults to Number.MAX_SAFE_INTEGER
+ */
 class Node {
   constructor(bid = null, key = Number.MAX_SAFE_INTEGER, next = null) {
     this.bid = bid
@@ -8,9 +16,21 @@ class Node {
   }
 }
 
+/*
+ * Hash Table
+ * Uses the Bids' bidId values to organize the Hash Table's structure
+ * Private fields: #tableSize, #nodes
+ * Private methods: #hash()
+ * Public methods: insertBid(), printAll(), removeBid(), findBid()
+ */
 export class HashTable {
   #tableSize
   #nodes
+  /**
+   * Function to calculate the hash value based on a given key
+   * @param {number} key
+   * @returns
+   */
   #hash(key) {
     return key % this.#tableSize
   }
@@ -21,29 +41,23 @@ export class HashTable {
   }
 
   /**
-   * Insert a bid
-   *
-   * @param bid The bid to insert
+   * Calculate the key based on the bid's bidId
+   * If no entry is found for the key, create a new node with the Bid
+   * Else: If Node has not been used, assign the Bid's values to it
+   *       Else, the Node already has value, find the next open Node (last one)
+   * @param {Bid} bid Bid to be inserted
    */
-  insert(bid) {
-    // Create key when inserting bid
+  insertBid(bid) {
     const key = this.#hash(Number(bid.bidId))
-
-    // Try and retrieve node using the key
     let oldNode = this.#nodes[key]
-
-    // If no entry is found for the key
     if (oldNode === null) {
       this.#nodes[key] = new Node(bid, key)
     } else {
-      // Node found
-      // If node has not been used
       if (oldNode.key === Number.MAX_SAFE_INTEGER) {
         oldNode.key = key
         oldNode.bid = bid
         oldNode.next = null
       } else {
-        // There is a Node with value, must find next open node (last one)
         while (oldNode.next !== null) {
           oldNode = oldNode.next
         }
@@ -51,8 +65,13 @@ export class HashTable {
       }
     }
   }
+
   /**
-   * Print all bids
+   * Create a result array to store all bids
+   * Iterate through the #nodes array containing all bids
+   * If node is not null and has been used:
+   *     Add node's Bid to the result, and move to the .next until it is null
+   * @returns result array
    */
   printAll() {
     const result = []
@@ -70,27 +89,22 @@ export class HashTable {
     }
     return result
   }
-
   /**
-   * Remove a bid
-   *
-   * @param bidId The bid id to search for
+   * Search and remove a Node with matching bidId
+   * @param {string} bidId bidId of the Bid to be removed
+   * @returns All bids if Bid is found, or false otherwise
    */
   removeBid(bidId) {
     // Calculate the key for the bid
+    // If node is null or unused, return false
     const key = this.#hash(Number(bidId))
-
-    // Try and retrieve the node using the key
     let node = this.#nodes[key]
-
-    // If node is null or unused, return empty bid
     if (node === null || node.key === Number.MAX_SAFE_INTEGER) {
       return false
     }
-
     // Walk the linked list to find the matching node
+    // If node found is not unused and matches bidId, return all bids
     while (node !== null) {
-      // If node found is not unused and matches bidId
       if (node.key !== Number.MAX_SAFE_INTEGER && node.bid.bidId === bidId) {
         this.#nodes[key] = this.#nodes[key].next
         return this.printAll()
@@ -98,35 +112,34 @@ export class HashTable {
       node = node.next
     }
 
+    // If not bid is found, return false
     return false
   }
 
   /**
-   * Search for the specified bidId
-   *
-   * @param bidId The bid id to search for
+   * Search and get Bid with matching bidId
+   * @param {string} bidId bidId of the Bid to be found
+   * @returns Matchin Bid if it is found, or false otherwise
    */
   findBid(bidId) {
     // Calculate the key for the bid
+    // If node is null or unused, return false
     const key = this.#hash(Number(bidId))
-
-    // Try and retrieve the node using the key
     let node = this.#nodes[key]
-
-    // If node is null or unused, return empty bid
     if (node === null || node.key === Number.MAX_SAFE_INTEGER) {
       return false
     }
 
     // Walk the linked list to find the matching node
+    // If node found is not unused and matches bidId, return Bid
     while (node !== null) {
-      // If node found is not unused and matches bidId
       if (node.key !== Number.MAX_SAFE_INTEGER && node.bid.bidId === bidId) {
         return node.bid
       }
       node = node.next
     }
 
+    // If no Bid is found, return false
     return false
   }
 }

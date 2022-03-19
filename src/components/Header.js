@@ -6,6 +6,8 @@ import { MdMenu } from 'react-icons/md'
 import { ThemeToggle } from './ThemeToggle'
 
 export const Header = ({ darkTheme, setDarkTheme }) => {
+  // Header contains a logo, as well as LinkedIn and GitHub links
+  // It also allow users to toggle the theme between light and dark
   const [toggleMenu, setToggleMenu] = useState(false)
   return (
     <div className="header-background">

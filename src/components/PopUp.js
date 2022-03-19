@@ -2,8 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import './PopUp.css'
 
 export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
+  // Create ref for the box to handle click outsite of it (closes box)
   const boxRef = useRef()
+  // Create inputRef to handle submit
   const inputRef = useRef()
+
+  // Set label based on the operation argument
   let label = ''
   if (operation === 'find') {
     label = 'FIND A BID'
@@ -12,7 +16,10 @@ export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
   } else if (operation === 'error') {
     label = 'ERROR'
   }
+
+  // useEffect contains click, touch, and key event listeners
   useEffect(() => {
+    // Closes PopUp if user clicks outside the "popup-box" element
     const clickListener = (event) => {
       // Do nothing if clicking ref's element or descendent elements
       if (!boxRef.current || boxRef.current.contains(event.target)) {
@@ -20,6 +27,7 @@ export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
       }
       setPopUp(false)
     }
+    // Closes PopUp if user presses Esc
     const keyPressListener = (event) => {
       if (event.key === 'Escape') {
         setPopUp(false)
@@ -29,6 +37,8 @@ export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
     document.addEventListener('mouseup', clickListener)
     document.addEventListener('touchend', clickListener)
     document.addEventListener('keydown', keyPressListener)
+
+    // Remove event listeners when component unmounts
     return () => {
       document.removeEventListener('mouseup', clickListener)
       document.removeEventListener('touchend', clickListener)
@@ -36,6 +46,12 @@ export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
     }
   })
 
+  /*
+   * handleSubmit()
+   * If bid was found, execute the handleFind or handleRemove functions according to the 'operation'
+   * Else, if bid was not found, display message to the user
+   * After the error message is displayed, user can click on "OK" to close the PopUp
+   */
   const handleSubmit = (e) => {
     if (operation !== 'error') {
       e.preventDefault()

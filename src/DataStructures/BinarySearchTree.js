@@ -1,3 +1,9 @@
+/*
+ * Node class is used to build the Binary Search Tree
+ * The bid field holds a Bid class
+ * The left and right fields act as "pointers" to other Nodes
+ * When arguments are not provided, they default to null
+ */
 class Node {
   constructor(bid = null, left = null, right = null) {
     this.bid = bid
@@ -6,10 +12,25 @@ class Node {
   }
 }
 
+/*
+ * Binary Search Tree (BST)
+ * Uses the Bids' bidId values to organize the BST structure
+ * Private field: root
+ * Private methods: addNode(), removeNode()
+ * Public methods: insertBid(), removeBid(), findBid(), preOrderTraversal(),
+ *                 inOrderTraversal(), postOrderTraversal()
+ */
+
 export class BinarySearchTree {
   #root
+
+  /**
+   * Private (recursive) function used by insertBid()
+   * @param {Node} node Current Node
+   * @param {Bid} bid Bid class to be inserted in a new Node
+   */
   #addNode(node, bid) {
-    // if node is larger than the bid, add to left subtree
+    // if node's bidId is larger than bid's, add to left subtree
     if (node.bid.bidId > bid.bidId) {
       if (node.left === null) {
         node.left = new Node(bid)
@@ -18,7 +39,7 @@ export class BinarySearchTree {
       }
     }
 
-    // add to the right subtree
+    // else, add to the right subtree
     else {
       if (node.right === null) {
         node.right = new Node(bid)
@@ -28,19 +49,25 @@ export class BinarySearchTree {
     }
   }
 
+  /**
+   * Private (recursive) function used by removeBid()
+   * @param {Node} node Current Node
+   * @param {string} bidId bidId of the Node to be removed
+   * @returns
+   */
   #removeNode(node, bidId) {
-    // If this node is null then return (avoid crashing)
+    // If this node is null then return null
     if (node === null) {
       return null
     }
 
-    // Recurse down left and right subtrees
+    // If bidId is smaller than node's, recurse down the left subtree
+    // Else if bidId is greater than node's recurse down the right subtree
+    // Else Node is found
     if (bidId < node.bid.bidId) {
       node.left = this.#removeNode(node.left, bidId)
     } else if (bidId > node.bid.bidId) {
       node.right = this.#removeNode(node.right, bidId)
-
-      // Else Node is found
     } else {
       // Node has no children (leaf)
       if (node.left === null && node.right === null) {
@@ -71,18 +98,23 @@ export class BinarySearchTree {
     this.#root = null
   }
 
-  /* ==================== INSERT ====================
-   * Loops until we get to an empty node
-   * If value is less than current node value, we move to the left child
-   * Else, if value is greater than current node value, we move to the right child
-   * Else, the value is duplicate, could be implemented with 'count' property
+  /**
+   * Insert a Bid
+   * If root is null, insert it at root, else call #addNode()
+   * @param {Bid} bid Bid to be inserted
    */
-  insert(bid) {
+  insertBid(bid) {
     this.#root === null
       ? (this.#root = new Node(bid))
       : this.#addNode(this.#root, bid)
   }
 
+  /**
+   * Search and remove Bid with matching bidId
+   * Call removeNode() to recurse starting at the root
+   * @param {string} bidId bidId of the Bid to be removed
+   * @returns If removeNode returns null, the bidId was not found, return false, else, it was found, return true
+   */
   removeBid(bidId) {
     const node = this.#removeNode(this.#root, bidId)
     if (node === null) {
@@ -91,6 +123,11 @@ export class BinarySearchTree {
     return true
   }
 
+  /**
+   * Search and get the Bid with matching bidId
+   * @param {string} bidId bidId of the Bid to be removed
+   * @returns the bid if found, or false if not found
+   */
   findBid(bidId) {
     let current = this.#root
 
@@ -109,6 +146,11 @@ export class BinarySearchTree {
     return false
   }
 
+  /**
+   * Gets current bid, then recurse down left subtree, then recurse down the right subtree
+   * @param {Node} node (optional): Starting node, defaults to the root
+   * @returns Array with all bids
+   */
   preOrderTraversal(node = this.#root) {
     if (node === null) return []
     else {
@@ -119,6 +161,12 @@ export class BinarySearchTree {
       ]
     }
   }
+
+  /**
+   * Recurse down left subtree, then current node, then recurse down the right subtree
+   * @param {Node} node (optional): Starting node, defaults to the root
+   * @returns Array with all bids
+   */
   inOrderTraversal(node = this.#root) {
     if (node === null) return []
     else {
@@ -129,6 +177,12 @@ export class BinarySearchTree {
       ]
     }
   }
+
+  /**
+   * Recurse down left subtree, then recurse down the right subtree, then gets the current node
+   * @param {Node} node (optional): Starting node, defaults to the root
+   * @returns Array with all bids
+   */
   postOrderTraversal(node = this.#root) {
     if (node === null) return []
     else {

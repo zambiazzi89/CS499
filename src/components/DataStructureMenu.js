@@ -8,6 +8,8 @@ export const DataStructureMenu = ({ setDataStructure }) => {
     'Hash Table',
     'Binary Search Tree',
   ]
+
+  // Menu for the user to select a data structure from the options
   return (
     <div className="data-structure-menu">
       <div>

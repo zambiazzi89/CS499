@@ -1,5 +1,9 @@
-// Linked list Node to hold a Bid
-// If no bid is passed as argument, defaults to null
+/*
+ * Node class is used to build the Linked List
+ * The bid field holds a Bid class
+ * The next field act as "pointer" to another Node
+ * When arguments are not provided, they default to null
+ */
 class Node {
   constructor(bid = null) {
     this.bid = bid
@@ -7,9 +11,13 @@ class Node {
   }
 }
 
-// Linked List class definition
+/*
+ * Linked List
+ * Private field: #size
+ * Public field: head, tail, size
+ * Public methods: insertBid(), printAll(), removeBid(), findBid()
+ */
 export class LinkedList {
-  // Private field: size
   #size
 
   constructor() {
@@ -18,7 +26,9 @@ export class LinkedList {
     this.size = 0
   }
 
-  // Checks if either head or tail is null while the other is not
+  /**
+   * Check if either head or tail are null while the other is not
+   */
   checkHeadTail() {
     if (
       (this.head === null && this.tail !== null) ||
@@ -30,8 +40,11 @@ export class LinkedList {
     }
   }
 
-  // Insert a new node holding a bid at the end of the linked list
-  append(bid) {
+  /**
+   * Insert a new node holding a bid at the end of the linked list
+   * @param {Bid} bid Bid to be appended
+   */
+  appendBid(bid) {
     const node = new Node(bid)
     this.checkHeadTail()
     if (this.tail !== null) {
@@ -43,8 +56,11 @@ export class LinkedList {
     this.size++
   }
 
-  // Insert a new node holding a bid at the beginning of the linked list
-  prepend(bid) {
+  /**
+   * Insert a new node holding a bid at the beginning of the linked list
+   * @param {Bid} bid Bid to be prepended
+   */
+  prependBid(bid) {
     const node = new Node(bid)
     this.checkHeadTail()
     if (this.head !== null) {
@@ -56,6 +72,10 @@ export class LinkedList {
     this.size++
   }
 
+  /**
+   * Iterate through the linked list adding bids to the result array
+   * @returns result array
+   */
   printList() {
     const result = []
     let current = this.head
@@ -66,41 +86,49 @@ export class LinkedList {
     return result
   }
 
+  /**
+   * Search and remove Bid with matching bidId
+   * @param {string} bidId bidId of the Bid to be removed
+   * @returns all bids if Bid is found, or false otherwise
+   */
   removeBid(bidId) {
     let found = false
     let succeedingNode
-    // checks that head is not null
     if (this.head != null) {
-      // if bidId is the head node
+      // Check that head is not null
       if (this.head.bid.bidId === bidId) {
+        // If bidId is the head node
         found = true
-        // if only head exists, deletes head and sets head and tail to null
         if (this.head.next === null) {
+          // if only head exists, deletes head and sets head and tail to null
           this.head = null
           this.tail = null
         } else {
-          //else, there are more nodes
-          succeedingNode = this.head.next // assigns the succeeding node to succeedingNode
-          this.head = succeedingNode // succeeding node is the new head
+          /**
+           * Else, there are more nodes
+           * Assign the succeeding node to succeedingNode
+           * And succeedingNode becomes the new head
+           */
+          succeedingNode = this.head.next
+          this.head = succeedingNode
         }
       } else {
-        // bidId is not the head node
-
+        // Else, bidId is not the head node
         let current = this.head
-
         while (current != null) {
           if (current.next?.bid.bidId === bidId) {
             found = true
             succeedingNode = current.next
-            // links current node to the node after succeedingNode
+            // Link current node to the node after succeedingNode
             current.next = succeedingNode.next
             break
           }
-          current = current.next // move current to the next node to loop
+          // Move current to the next node to loop
+          current = current.next
         }
       }
       if (found === true) {
-        this.size-- //decreases size
+        this.size--
         if (this.size === 0 || this.size === 1) {
           this.tail = this.head
         }
@@ -110,25 +138,24 @@ export class LinkedList {
     return false
   }
 
+  /**
+   * Search and get Bid with matching bidId
+   * @param {string} bidId bidId of the Bid to be found
+   * @returns Bid if it is found, false otherwise
+   */
   findBid(bidId) {
     let current = this.head
-
     while (current !== null) {
       if (current.bid.bidId === bidId) {
         break
       }
       current = current.next
     }
-
-    // if the while loop ends and no node is matched, returns empty bid
+    // if the while loop ends and no node is matched, return false
     if (current === null) {
       return false
     }
-
+    // bidId is found, return Bid
     return current.bid
-  }
-
-  getSize() {
-    console.log(this.size)
   }
 }

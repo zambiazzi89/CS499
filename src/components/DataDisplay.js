@@ -2,6 +2,8 @@ import React from 'react'
 import './DataDisplay.css'
 
 export const DataDisplay = ({ loadedData, displayData, timeElapsed }) => {
+  // If no dataset is loaded, display message informing user
+  // Else, display performance and dataset
   return (
     <div className="data-container">
       {!loadedData && !displayData && (
