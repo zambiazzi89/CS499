@@ -35,3 +35,11 @@
 .inactive-operation-button:hover {
   cursor: default;
 }
+
+.hash-table-info {
+  margin-bottom: 1em;
+}
+.hash-table-info > div {
+  margin-bottom: 1em;
+  text-align: center;
+}

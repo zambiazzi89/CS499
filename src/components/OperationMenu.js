@@ -17,7 +17,7 @@ export const OperationMenu = ({
   setDisplayData,
   setTimeElapsed,
 }) => {
-  /*
+  /**
    * Use reference Hooks for the data structures
    * This allows them to hold the state when the component is re-rendered
    * Data structure values will be accessible through the .current property
@@ -27,7 +27,7 @@ export const OperationMenu = ({
   const hashTable = useRef(null)
   const binarySearchTree = useRef(null)
 
-  /*
+  /**
    * useState Hooks are used to hold the state of specific variables used in operations
    * traversal: identify the traversal option (pre-, in-, or post-order traversal) selected by the user
    * popUp: open or close the PopUp component
@@ -37,7 +37,7 @@ export const OperationMenu = ({
   const [popUp, setPopUp] = useState(false)
   const [operation, setOperation] = useState('')
 
-  /*
+  /**
    * Initialize variables to hold the CSV data
    * Perform operations to split the values into rows and columns
    * As well as trimming whitespaces from the edges of the values
@@ -56,8 +56,7 @@ export const OperationMenu = ({
     )
   }
 
-  /*
-   * handleLoad()
+  /**
    * Initialize the selected data structure
    * Load values from the bid dataset
    * Inform that data was loaded
@@ -91,8 +90,7 @@ export const OperationMenu = ({
     setTimeElapsed(performance.now() - timeStart)
   }
 
-  /*
-   * handleDisplay()
+  /**
    * Parameter (optional): traversal option, defaults to empty string
    * Perform operations only if data has been loaded
    * Send all Bids in the selected data structure to the displayData variable
@@ -131,8 +129,7 @@ export const OperationMenu = ({
     }
   }
 
-  /*
-   * handleFindPopUp()
+  /**
    * Set operation to 'find' and popUp to true
    * This makes the PopUp component visible
    */
@@ -141,8 +138,7 @@ export const OperationMenu = ({
     setPopUp(true)
   }
 
-  /*
-   * handleFind()
+  /**
    * Parameter: bidId of the bid to be found
    * This function is passed to the PopUp component
    * It is executed when users press the "Submit" button
@@ -182,8 +178,7 @@ export const OperationMenu = ({
     return true
   }
 
-  /*
-   * handleRemovePopUp()
+  /**
    * Set operation to 'remove' and popUp to true
    * This makes the PopUp component visible
    */
@@ -192,8 +187,7 @@ export const OperationMenu = ({
     setPopUp(true)
   }
 
-  /*
-   * handleRemove()
+  /**
    * Parameter: bidId of the bid to be removed
    * This function is passed to the PopUp component
    * It is executed when users press the "Submit" button
@@ -243,8 +237,7 @@ export const OperationMenu = ({
     return true
   }
 
-  /*
-   * handleArraySort()
+  /**
    * Parameter: type of array sorting algorithm
    * Implemented options: 'quick' and 'selection'
    */
@@ -270,7 +263,46 @@ export const OperationMenu = ({
     }
   }
 
-  /*
+  /**
+   * Call the Linked List's method to reverse itself
+   * Calculate performance in ms
+   */
+  const handleReverseLinkedList = () => {
+    if (loadedData) {
+      const timeStart = performance.now()
+      let result = linkedList.current.reverseLinkedList()
+      setDisplayData(result)
+      setTimeElapsed(performance.now() - timeStart)
+    }
+  }
+
+  /**
+   * Open PopUp and identify the operation
+   */
+  const handleSetHashSaltPopUp = () => {
+    setOperation('set-hash-salt')
+    setPopUp(true)
+  }
+
+  /**
+   * Function is passed to PopUp component
+   * Create new Hash Table using the user's input as hash salt
+   * @param {number} salt number to be used in the hash function
+   * @returns false if not a number, true otherwise
+   */
+  const handleSetHashSalt = (salt) => {
+    if (isNaN(salt)) {
+      return false
+    } else {
+      const timeStart = performance.now()
+      hashTable.current = new HashTable(Number(salt))
+      bidsArray.forEach((bid) => hashTable.current.insertBid(bid))
+      setTimeElapsed(performance.now() - timeStart)
+      return true
+    }
+  }
+
+  /**
    * handleExit()
    * Called when "Exit" button is clicked
    * Clears all data structures and Hooks
@@ -286,7 +318,7 @@ export const OperationMenu = ({
     setTimeElapsed(0)
   }
 
-  /*
+  /**
    * return(): Components to be rendered
    * Menu to be displayed
    * Options vary according to the data structure selected
@@ -300,9 +332,16 @@ export const OperationMenu = ({
           setPopUp={setPopUp}
           handleFind={handleFind}
           handleRemove={handleRemove}
+          handleSetHashSalt={handleSetHashSalt}
         />
       )}
       <div className="data-structure-title">{dataStructure}</div>
+      {dataStructure === 'Hash Table' && loadedData && (
+        <div className="hash-table-info">
+          <div>Hash Salt: {hashTable.current.getHashSalt()}</div>
+          <div>Collisions: {hashTable.current.getCollisions()}</div>
+        </div>
+      )}
       <div className="active-operation-button" onClick={handleLoad}>
         Load Bids
       </div>
@@ -379,10 +418,20 @@ export const OperationMenu = ({
         </>
       )}
       {dataStructure === 'Linked List' && (
-        <div className={'inactive-operation-button'}>Reverse List</div>
+        <div
+          className={`${loadedData ? 'active' : 'inactive'}-operation-button`}
+          onClick={handleReverseLinkedList}
+        >
+          Reverse List
+        </div>
       )}
       {dataStructure === 'Hash Table' && (
-        <div className={'inactive-operation-button'}>Set Hash Key</div>
+        <div
+          className={`${loadedData ? 'active' : 'inactive'}-operation-button`}
+          onClick={handleSetHashSaltPopUp}
+        >
+          Set Hash Salt
+        </div>
       )}
       <div className="active-operation-button" onClick={handleExit}>
         Exit

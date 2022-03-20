@@ -26,20 +26,38 @@ class Node {
 export class HashTable {
   #tableSize
   #nodes
+  #collisions
+  #hashSalt
   /**
    * Function to calculate the hash value based on a given key
    * @param {number} key
    * @returns
    */
   #hash(key) {
-    return key % this.#tableSize
+    let result = 0
+    for (let i = 0; i < key.length; i++) {
+      result += this.#hashSalt ** i * key.charCodeAt(i)
+    }
+    return result % this.#tableSize
   }
 
-  constructor(size = DEFAULT_SIZE) {
+  constructor(salt = 17, size = DEFAULT_SIZE) {
     this.#tableSize = size
     this.#nodes = new Array(size).fill(null)
+    this.#collisions = 0
+    this.#hashSalt = salt
   }
 
+  getCollisions() {
+    return this.#collisions
+  }
+
+  getHashSalt() {
+    return this.#hashSalt
+  }
+  setHashSalt(num) {
+    this.#hashSalt = num
+  }
   /**
    * Calculate the key based on the bid's bidId
    * If no entry is found for the key, create a new node with the Bid
@@ -48,7 +66,7 @@ export class HashTable {
    * @param {Bid} bid Bid to be inserted
    */
   insertBid(bid) {
-    const key = this.#hash(Number(bid.bidId))
+    const key = this.#hash(bid.bidId)
     let oldNode = this.#nodes[key]
     if (oldNode === null) {
       this.#nodes[key] = new Node(bid, key)
@@ -60,7 +78,9 @@ export class HashTable {
       } else {
         while (oldNode.next !== null) {
           oldNode = oldNode.next
+          this.#collisions++
         }
+        this.#collisions++
         oldNode.next = new Node(bid, key)
       }
     }
@@ -97,7 +117,7 @@ export class HashTable {
   removeBid(bidId) {
     // Calculate the key for the bid
     // If node is null or unused, return false
-    const key = this.#hash(Number(bidId))
+    const key = this.#hash(bidId)
     let node = this.#nodes[key]
     if (node === null || node.key === Number.MAX_SAFE_INTEGER) {
       return false
@@ -124,7 +144,7 @@ export class HashTable {
   findBid(bidId) {
     // Calculate the key for the bid
     // If node is null or unused, return false
-    const key = this.#hash(Number(bidId))
+    const key = this.#hash(bidId)
     let node = this.#nodes[key]
     if (node === null || node.key === Number.MAX_SAFE_INTEGER) {
       return false

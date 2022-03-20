@@ -1,7 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import './PopUp.css'
 
-export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
+export const PopUp = ({
+  operation,
+  setPopUp,
+  handleFind,
+  handleRemove,
+  handleSetHashSalt,
+}) => {
   // Create ref for the box to handle click outsite of it (closes box)
   const boxRef = useRef()
   // Create inputRef to handle submit
@@ -9,10 +15,16 @@ export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
 
   // Set label based on the operation argument
   let label = ''
+  let placeholder = ''
   if (operation === 'find') {
     label = 'FIND A BID'
+    placeholder = 'Enter a Bid ID'
   } else if (operation === 'remove') {
     label = 'REMOVE A BID'
+    placeholder = 'Enter a Bid ID'
+  } else if (operation === 'set-hash-salt') {
+    label = 'SET HASH SALT'
+    placeholder = 'Enter a number'
   } else if (operation === 'error') {
     label = 'ERROR'
   }
@@ -55,12 +67,14 @@ export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
   const handleSubmit = (e) => {
     if (operation !== 'error') {
       e.preventDefault()
-      const bidId = inputRef.current.value
+      const input = inputRef.current.value
       let result = false
       if (operation === 'find') {
-        result = handleFind(bidId)
+        result = handleFind(input)
       } else if (operation === 'remove') {
-        result = handleRemove(bidId)
+        result = handleRemove(input)
+      } else if (operation === 'set-hash-salt') {
+        result = handleSetHashSalt(input)
       }
       if (result) {
         setPopUp(false)
@@ -85,7 +99,7 @@ export const PopUp = ({ operation, setPopUp, handleFind, handleRemove }) => {
         <form onSubmit={handleSubmit}>
           <div className="popup-box" ref={boxRef}>
             <div>{label}</div>
-            <input autoFocus placeholder="Enter a Bid ID" ref={inputRef} />
+            <input autoFocus placeholder={placeholder} ref={inputRef} />
             <div className="popup-button" onClick={handleSubmit}>
               SUBMIT
             </div>

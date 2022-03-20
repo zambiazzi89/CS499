@@ -158,4 +158,18 @@ export class LinkedList {
     // bidId is found, return Bid
     return current.bid
   }
+
+  reverseLinkedList() {
+    let previous = null
+    let current = this.head
+    let next = null
+    while (current !== null) {
+      next = current.next
+      current.next = previous
+      previous = current
+      current = next
+    }
+    this.head = previous
+    return this.printList()
+  }
 }
