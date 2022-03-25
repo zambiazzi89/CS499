@@ -1,0 +1,31 @@
+{
+  "name": "cs499",
+  "version": "1.0.0",
+  "description": "CS 499 Capstone website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zambiazzi89/CS499.git"
+  },
+  "author": "Diego Bez Zambiazzi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zambiazzi89/CS499/issues"
+  },
+  "homepage": "https://github.com/zambiazzi89/CS499#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.7"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
