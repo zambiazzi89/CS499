@@ -1,6 +1,7 @@
-const express = require('express')
+import express from 'express'
+import Bid from '../models/bid.js'
+
 const router = express.Router()
-const Bid = require('../models/bid')
 
 const getBid = async (req, res, next) => {
   let bid
@@ -57,4 +58,4 @@ router.delete('/:id', getBid, async (req, res) => {
   }
 })
 
-module.exports = router
+export default router
