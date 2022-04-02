@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './Header.css'
+import './Navbar.css'
 import { Logo } from '../Logo'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import { MdMenu } from 'react-icons/md'
 import { ThemeToggle } from './ThemeToggle'
 
-export const Header = ({ darkTheme, setDarkTheme }) => {
+export const Navbar = ({ darkTheme, setDarkTheme }) => {
   // Header contains a logo, as well as LinkedIn and GitHub links
   // It also allow users to toggle the theme between light and dark
   const [toggleMenu, setToggleMenu] = useState(false)
@@ -19,7 +19,7 @@ export const Header = ({ darkTheme, setDarkTheme }) => {
         <nav>
           <MdMenu
             onClick={() => setToggleMenu(!toggleMenu)}
-            className="header-menu-button nav-button icons"
+            className="navbar-menu-button nav-button icons"
           />
           <ul className={`${toggleMenu ? 'dropdown-open' : 'dropdown-closed'}`}>
             <li>

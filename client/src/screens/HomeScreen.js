@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import './Body.css'
-import { DataDisplay } from './DataDisplay'
-import { DataStructureMenu } from './DataStructureMenu'
-import { OperationMenu } from './OperationMenu'
+import './HomeScreen.css'
+import { DataDisplay } from '../components/DataDisplay'
+import { DataStructureMenu } from '../components/DataStructureMenu'
+import { OperationMenu } from '../components/OperationMenu'
 import { useFetch } from '../useFetch'
 
-export const Body = () => {
+export const HomeScreen = () => {
   // Use state Hooks to preserve the values of specific variables through re-renders
   const [dataStructure, setDataStructure] = useState('')
   const [loadedData, setLoadedData] = useState(false)

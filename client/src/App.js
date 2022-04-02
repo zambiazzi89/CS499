@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import { Header } from './components/Header'
-import { Body } from './components/Body'
+import { Navbar } from './components/Navbar'
+import { HomeScreen } from './screens/HomeScreen'
 import { DatabaseScreen } from './screens/DatabaseScreen'
 
 const App = () => {
@@ -11,11 +11,11 @@ const App = () => {
   return (
     <BrowserRouter>
       <div id="app" className={`App ${darkTheme ? 'dark' : 'light'}`}>
-        <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
+        <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
         <main>
           <Routes>
             <Route path="/database" element={<DatabaseScreen />} />
-            <Route path="/" element={<Body />} exact />
+            <Route path="/" element={<HomeScreen />} exact />
           </Routes>
         </main>
       </div>

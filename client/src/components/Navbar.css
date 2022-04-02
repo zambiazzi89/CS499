@@ -1,5 +1,5 @@
 @media only screen and (max-width: 450px) {
-  .header-menu-button {
+  .navbar-menu-button {
     display: block;
   }
   .App-header ul {
@@ -36,7 +36,7 @@
   }
 }
 @media only screen and (min-width: 450px) {
-  .header-menu-button {
+  .navbar-menu-button {
     display: none;
   }
   nav ul {
@@ -47,7 +47,7 @@
 }
 
 #logo {
-  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 1.5rem;
 }
 #logo path {
   fill: var(--accent-color);

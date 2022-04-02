@@ -27,3 +27,44 @@
   cursor: pointer;
   background-color: var(--accent-color-light);
 }
+
+.bid-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4em;
+  height: 4em;
+}
+.bid-input > input {
+  height: 3rem;
+  width: 10em;
+  padding: 1em;
+}
+.bid-input > div {
+  display: grid;
+  place-items: center;
+  font-size: 0.9em;
+  height: 3rem;
+  width: 3rem;
+  color: var(--button-font-color);
+  background-color: var(--accent-color);
+}
+.bid-input > div:hover {
+  cursor: pointer;
+  background-color: var(--accent-color-light);
+}
+.bid-input.inactive {
+  visibility: hidden;
+  margin-top: -4em;
+  opacity: 0;
+  transition: opacity linear 0.4s, visibility linear 0.4s,
+    margin-top linear 0.4s 0.4s;
+}
+.bid-input.active {
+  visibility: visible;
+  margin-top: 0;
+  opacity: 1;
+  transition: margin-top linear 0.4s, opacity linear 0.4s 0.4s,
+    visibility linear 0.4s 0.4s;
+}

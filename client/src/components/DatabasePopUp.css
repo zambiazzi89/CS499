@@ -1,0 +1,37 @@
+.database-popup-background {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-color-80);
+  display: grid;
+  place-items: center;
+}
+
+.database-popup-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 18em;
+  width: 20em;
+  padding: 2em 4em;
+  background-color: var(--card-color);
+  border: 2px solid var(--accent-color);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.database-popup-box > input {
+  padding: 0.2em;
+}
+
+.database-popup-button {
+  font-size: 0.9em;
+  padding: 0.5em;
+  color: var(--button-font-color);
+  background-color: var(--accent-color);
+}
+
+.database-popup-button:hover {
+  cursor: pointer;
+}

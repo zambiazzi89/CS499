@@ -5,6 +5,7 @@ import { DatabaseMenu } from '../components/DatabaseMenu'
 
 export const DatabaseScreen = () => {
   const [data, setData] = useState([])
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get('bids')
@@ -15,7 +16,7 @@ export const DatabaseScreen = () => {
   }, [])
   return (
     <div className="database-screen-container">
-      <DatabaseMenu />
+      <DatabaseMenu setData={setData} />
       <div className="db-data-container">
         {data.length === 0 && <div>Loading...</div>}
         <div>

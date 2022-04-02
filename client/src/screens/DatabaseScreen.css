@@ -7,4 +7,5 @@
 
 .db-data-container {
   overflow: scroll;
+  flex: 1;
 }

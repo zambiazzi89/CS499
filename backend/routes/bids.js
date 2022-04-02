@@ -1,5 +1,6 @@
 import express from 'express'
 import Bid from '../models/bid.js'
+import { bids } from '../seeder/bids.js'
 
 const router = express.Router()
 
@@ -53,6 +54,20 @@ router.delete('/:id', getBid, async (req, res) => {
   try {
     await res.bid.remove()
     return res.status(200).json({ message: 'Bid deleted successfully.' })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// Update
+router.put('/:id', getBid, async (req, res) => {
+  try {
+    const updatedBid = req.body
+    res.bid.title = updatedBid.title
+    res.bid.fund = updatedBid.fund
+    res.bid.amount = updatedBid.amount
+    await res.bid.save()
+    return res.status(200).json({ message: 'Bid updated successfully.' })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
