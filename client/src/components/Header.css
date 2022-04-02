@@ -78,7 +78,7 @@
   align-items: center;
   justify-content: space-between;
   color: var(--font-color);
-  font-weight: 800;
+  font-weight: 600;
 }
 .App-header nav {
   display: flex;
@@ -99,14 +99,17 @@
 .nav-button:hover {
   cursor: pointer;
 }
-
-a.active-nav-button {
-  color: var(--accent-color);
-}
-.active-nav-button:hover {
-  cursor: default;
-}
 .App-header .icons {
   width: 1.5em;
   height: 1.5em;
+}
+
+a.database-nav-button {
+  padding: 0.4em;
+  border-radius: 4px;
+  background-color: var(--accent-color);
+  color: var(--button-font-color);
+}
+a.database-nav-button:hover {
+  background-color: var(--accent-color-light);
 }

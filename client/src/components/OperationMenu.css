@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   width: 15em;
-  box-shadow: 5em 5em black;
+  box-shadow: 1px 0px 8px var(--shadow);
 }
 .data-structure-title {
   font-size: 1.2em;

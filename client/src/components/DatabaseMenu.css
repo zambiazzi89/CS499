@@ -1,0 +1,29 @@
+.database-menu-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 15em;
+  box-shadow: 1px 0px 8px var(--shadow);
+}
+
+.db-menu-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin-top: -1em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.db-button {
+  width: 100%;
+  padding: 1em;
+  margin: 0.1em;
+  background-color: var(--accent-color);
+  color: var(--button-font-color);
+  text-align: center;
+}
+.db-button:hover {
+  cursor: pointer;
+  background-color: var(--accent-color-light);
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './Header.css'
 import { Logo } from '../Logo'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
@@ -12,13 +13,24 @@ export const Header = ({ darkTheme, setDarkTheme }) => {
   return (
     <div className="header-background">
       <header className="App-header">
-        <Logo id="logo" />
+        <Link to="/" id="logo" onClick={() => setToggleMenu(!toggleMenu)}>
+          <Logo />
+        </Link>
         <nav>
           <MdMenu
             onClick={() => setToggleMenu(!toggleMenu)}
             className="header-menu-button nav-button icons"
           />
           <ul className={`${toggleMenu ? 'dropdown-open' : 'dropdown-closed'}`}>
+            <li>
+              <Link
+                to="/database"
+                className="database-nav-button"
+                onClick={() => setToggleMenu(!toggleMenu)}
+              >
+                DB
+              </Link>
+            </li>
             <li className="nav-button" onClick={() => setToggleMenu(false)}>
               <a
                 href="https://github.com/zambiazzi89"

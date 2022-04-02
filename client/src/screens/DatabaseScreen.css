@@ -1,0 +1,10 @@
+.database-screen-container {
+  height: 100vh;
+  padding-top: 5em;
+  display: flex;
+  flex-direction: row;
+}
+
+.db-data-container {
+  overflow: scroll;
+}
