@@ -2,14 +2,17 @@ import React, { useRef, useState } from 'react'
 import axios from 'axios'
 import './DatabaseMenu.css'
 import { DatabasePopUp } from './DatabasePopUp'
+import { ErrorPopUp } from './ErrorPopUp'
 
 export const DatabaseMenu = ({ setData }) => {
   const [showFindInput, setShowFindInput] = useState(false)
   const [showDeleteInput, setShowDeleteInput] = useState(false)
   const [showUpdateInput, setShowUpdateInput] = useState(false)
   const [databasePopUp, setDatabasePopUp] = useState(false)
+  const [errorPopUp, setErrorPopUp] = useState(false)
   const [selectedBid, setSelectedBid] = useState({})
   const [databaseOperation, setDatabaseOperation] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const findInputRef = useRef()
   const deleteInputRef = useRef()
@@ -26,24 +29,60 @@ export const DatabaseMenu = ({ setData }) => {
     e.preventDefault()
     const bidId = findInputRef.current.value
     findInputRef.current.value = ''
-    const { data } = await axios.get(`/bids/${bidId}`)
-    setData([data])
+    const res = await axios.get(`/bids/${bidId}`).catch((error) => {
+      if (error.response) {
+        setErrorMessage(error.response.data.message)
+      } else {
+        setErrorMessage(error.message)
+      }
+      setErrorPopUp(true)
+    })
+    if (res) {
+      setData([res.data])
+    }
     setShowFindInput(false)
   }
   const handleDeleteBid = async () => {
     const bidId = deleteInputRef.current.value
     deleteInputRef.current.value = ''
-    await axios.delete(`/bids/${bidId}`)
-    loadAllBids()
+    await axios
+      .delete(`/bids/${bidId}`)
+      .then(loadAllBids())
+      .catch((error) => {
+        if (error.response) {
+          setErrorMessage(error.response.data.message)
+        } else {
+          setErrorMessage(error.message)
+        }
+        setErrorPopUp(true)
+      })
   }
 
   const handleCreateBid = async (bid) => {
-    await axios.post('/bids', bid)
-    loadAllBids()
+    await axios
+      .post('/bids', bid)
+      .then(loadAllBids())
+      .catch((error) => {
+        if (error.response) {
+          setErrorMessage(error.response.data.message)
+        } else {
+          setErrorMessage(error.message)
+        }
+        setErrorPopUp(true)
+      })
   }
   const handleUpdateBid = async (bid) => {
-    await axios.put(`/bids/${bid.bidId}`, bid)
-    loadAllBids()
+    await axios
+      .put(`/bids/${bid.bidId}`, bid)
+      .then(loadAllBids())
+      .catch((error) => {
+        if (error.response) {
+          setErrorMessage(error.response.data.message)
+        } else {
+          setErrorMessage(error.message)
+        }
+        setErrorPopUp(true)
+      })
   }
 
   const handleDatabasePopUp = async (e, operation) => {
@@ -54,9 +93,18 @@ export const DatabaseMenu = ({ setData }) => {
     e.preventDefault()
     const bidId = updateInputRef.current.value
     updateInputRef.current.value = ''
-    const { data } = await axios.get(`/bids/${bidId}`)
-    setSelectedBid(data)
-    setDatabasePopUp(true)
+    const res = await axios.get(`/bids/${bidId}`).catch((error) => {
+      if (error.response) {
+        setErrorMessage(error.response.data.message)
+      } else {
+        setErrorMessage(error.message)
+      }
+      setErrorPopUp(true)
+    })
+    if (res) {
+      setSelectedBid(res.data)
+      setDatabasePopUp(true)
+    }
   }
 
   return (
@@ -69,6 +117,9 @@ export const DatabaseMenu = ({ setData }) => {
           handleCreateBid={handleCreateBid}
           handleUpdateBid={handleUpdateBid}
         />
+      )}
+      {errorPopUp && (
+        <ErrorPopUp setErrorPopUp={setErrorPopUp} errorMessage={errorMessage} />
       )}
       <div className="db-menu-title">Database Menu</div>
       <div className="db-button" onClick={loadAllBids}>

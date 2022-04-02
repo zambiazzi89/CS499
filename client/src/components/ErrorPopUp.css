@@ -1,4 +1,4 @@
-.database-popup-background {
+.error-popup-background {
   position: absolute;
   height: 100vh;
   width: 100vw;
@@ -7,12 +7,12 @@
   place-items: center;
 }
 
-.database-popup-box {
+.error-popup-box {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 18em;
+  height: 12em;
   width: 20em;
   padding: 2em 4em;
   background-color: var(--card-color);
@@ -21,20 +21,17 @@
   text-align: center;
 }
 
-.database-popup-box > input {
+.error-popup-box > input {
   padding: 0.2em;
 }
 
-.database-popup-button {
-  border: none;
-  width: 100%;
+.error-popup-button {
   font-size: 0.9em;
   padding: 0.5em;
   color: var(--button-font-color);
   background-color: var(--accent-color);
 }
 
-.database-popup-button:hover {
+.error-popup-button:hover {
   cursor: pointer;
-  background-color: var(--accent-color-light);
 }

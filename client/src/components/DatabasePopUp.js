@@ -100,9 +100,13 @@ export const DatabasePopUp = ({
             }
           />
 
-          <div className="database-popup-button" onClick={handleSubmit}>
+          <button
+            className="database-popup-button"
+            onClick={handleSubmit}
+            type="submit"
+          >
             SUBMIT
-          </div>
+          </button>
         </div>
       </form>
     </div>

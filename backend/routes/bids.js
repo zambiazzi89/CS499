@@ -35,17 +35,22 @@ router.get('/:id', getBid, (req, res) => {
 
 // Create one
 router.post('/', async (req, res) => {
-  const bid = new Bid({
-    bidId: req.body.bidId,
-    title: req.body.title,
-    fund: req.body.fund,
-    amount: req.body.amount,
-  })
-  try {
-    const newBid = await bid.save()
-    res.status(200).json(newBid)
-  } catch (error) {
-    res.status(400).json({ message: error.message })
+  const existingBid = await Bid.findOne({ bidId: req.body.bidId })
+  if (existingBid === null) {
+    const bid = new Bid({
+      bidId: req.body.bidId,
+      title: req.body.title,
+      fund: req.body.fund,
+      amount: req.body.amount,
+    })
+    try {
+      const newBid = await bid.save()
+      res.status(200).json(newBid)
+    } catch (error) {
+      res.status(400).json({ message: error.message })
+    }
+  } else {
+    res.status(409).json({ message: 'Bid ID already exists.' })
   }
 })
 
