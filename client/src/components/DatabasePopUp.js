@@ -71,6 +71,7 @@ export const DatabasePopUp = ({
             <>
               <div>CREATE BID</div>
               <input
+                required
                 autoFocus={databaseOperation === 'create'}
                 placeholder="Bid ID"
                 ref={bidIdRef}
@@ -78,6 +79,7 @@ export const DatabasePopUp = ({
             </>
           )}
           <input
+            required
             autoFocus={databaseOperation === 'update'}
             placeholder="Title"
             ref={titleRef}
@@ -86,6 +88,7 @@ export const DatabasePopUp = ({
             }
           />
           <input
+            required
             placeholder="Fund"
             ref={fundRef}
             defaultValue={
@@ -93,18 +96,14 @@ export const DatabasePopUp = ({
             }
           />
           <input
+            required
             placeholder="Amount"
             ref={amountRef}
             defaultValue={
               databaseOperation === 'update' ? selectedBid.amount : ''
             }
           />
-
-          <button
-            className="database-popup-button"
-            onClick={handleSubmit}
-            type="submit"
-          >
+          <button className="database-popup-button" type="submit">
             SUBMIT
           </button>
         </div>
